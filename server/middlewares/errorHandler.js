@@ -3,7 +3,7 @@ function errorHandler(err, req, res, next) {
 
     let errorCode, statusCode, errorMessage
 
-    // console.log(err)
+    console.log(err)
 
     switch (err.name) {
         case "SequelizeValidationError":
@@ -31,7 +31,7 @@ function errorHandler(err, req, res, next) {
             errorMessage = "Your email already register, please login or use other email!"
             break
         case "NO_EMAIL_FOUND":
-            statusCode = 400
+            statusCode = 404
             errorCode = err.name
             errorMessage = "Your email not found, please register!"
             break

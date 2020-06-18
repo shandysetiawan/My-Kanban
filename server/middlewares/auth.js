@@ -3,14 +3,18 @@ const { User, Task } = require('../models')
 
 function authentication(req, res, next) {
 
-    let token = req.headers.access_token
+    console.log('in auth')
+    console.log(req.headers)
 
-    if (!token) {
+    const { access_token } = req.headers
+
+    console.log(access_token)
+    if (!access_token) {
         next({ name: "AUTH_FAILED1" })
     } else {
 
         try {
-            let decoded = jwt.verify(token, process.env.KEYJWT)
+            let decoded = jwt.verify(access_token, process.env.KEYJWT)
 
             User.findByPk(decoded.id)
                 .then((data) => {
@@ -38,6 +42,7 @@ function authentication(req, res, next) {
 function authorization(req, res, next) {
 
     let idTask = req.params.id
+    console.log(idTask)
 
     Task.findByPk(idTask)
         .then((data) => {

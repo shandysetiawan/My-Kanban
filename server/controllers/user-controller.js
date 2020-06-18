@@ -20,9 +20,9 @@ class UserController {
             })
             .then((data) => {
 
-                console.log(data)
+                // console.log(data)
                 if (data) {
-                    res.status(201).json({ data: data, message: "Succesfully register email!" })
+                    res.status(201).json({ id: data.id, email: data.email })
                 } else {
                     throw ({ name: "EMAIL_ALREADY_REGISTERED" })
                 }
@@ -47,9 +47,11 @@ class UserController {
 
                         let dataUser = { id: data.id, email: data.email }
 
-                        let token = jwt.sign(dataUser, process.env.KEYJWT);
+                        let access_token = jwt.sign(dataUser, process.env.KEYJWT);
 
-                        res.status(200).json({ access_token: token, message: "Successfully login!" })
+                        console.log(access_token)
+
+                        res.status(200).json(access_token)
                     } else {
 
                         throw ({ name: "EMAIL_PASS_NOT MATCH" })
@@ -102,7 +104,7 @@ class UserController {
             .then((data) => {
                 let token = jwt.sign({ id: data.id, email: data.email }, process.env.KEYJWT)
 
-                res.status(201).json({ access_token: token, message: "Successfully login!" })
+                res.status(201).json({ access_token: token })
             })
             .catch((err) => {
                 next(err)

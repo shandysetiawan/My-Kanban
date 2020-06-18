@@ -9,7 +9,7 @@ class TaskController {
         Task.create(newTask)
             .then((data) => {
 
-                res.status(201).json({ data: data, message: "Task successfully created!" })
+                res.status(201).json({ data })
 
             }).catch((err) => {
                 next(err)
@@ -21,11 +21,9 @@ class TaskController {
 
         Task.findAll()
             .then((data) => {
-                if (data.length == 0) {
-                    res.status(200).json({ data: data, message: "No task yet" })
-                } else {
-                    res.status(200).json({ data: data, message: "Success to fetch task!" })
-                }
+
+                res.status(200).json({ data })
+
             })
             .catch((err) => {
                 next(err)
@@ -43,7 +41,7 @@ class TaskController {
         Task.update(updateTask, { where: { id: taskId } })
             .then((data) => {
 
-                res.status(200).json({ data: data, message: "Success update task!" })
+                res.status(200).json({ data })
 
             })
             .catch((err) => {
@@ -61,7 +59,7 @@ class TaskController {
         Task.destroy({ where: { id: taskId } })
             .then((data) => {
 
-                res.status(200).json({ data: data, message: "Success to delete task!" })
+                res.status(200).json({ message: "Success to delete task!" })
 
             })
             .catch((err) => {
