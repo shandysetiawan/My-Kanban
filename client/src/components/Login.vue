@@ -37,6 +37,9 @@
     ></GoogleLogin
     ><br />
     <p>Don't have account? Register below</p>
+    <button type="submit" class="btn btn-primary" @click="registerClick">
+      Register
+    </button>
   </section>
 
   <!-- ----------------------------------------------- -->
@@ -67,7 +70,7 @@ export default {
   methods: {
     loginUser() {
       axios
-        .post("http://localhost:3000/login", {
+        .post("https://my-kanban-123.herokuapp.com/login", {
           email: this.emailLogin,
           password: this.passwordLogin,
         })
@@ -94,7 +97,7 @@ export default {
       // console.log(id_token);
       axios({
         method: "post",
-        url: `http://localhost:3000/googleSign`,
+        url: `https://my-kanban-123.herokuapp.com/googleSign`,
         data: { id_token },
       })
         .then((response) => {
@@ -108,6 +111,9 @@ export default {
         });
     },
     onFailure() {},
+    registerClick() {
+      this.$emit("registerbutton");
+    },
   },
 };
 </script>

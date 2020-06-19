@@ -97,7 +97,7 @@ export default {
     addTask() {
       axios({
         method: "post",
-        url: "http://localhost:3000/task",
+        url: "https://my-kanban-123.herokuapp.com/task",
         data: {
           title: this.titleTask,
           category: this.categoryTask,

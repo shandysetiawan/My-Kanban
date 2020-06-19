@@ -26,7 +26,7 @@
           v-model="passwordRegister"
         />
       </div>
-      <button type="submit" class="btn btn-primary">Register</button>
+      <button type="submit" class="btn btn-primary">Create Account</button>
     </form>
   </section>
 </template>
@@ -45,7 +45,7 @@ export default {
   methods: {
     registerUser() {
       axios
-        .post("http://localhost:3000/register", {
+        .post("https://my-kanban-123.herokuapp.com/register", {
           email: this.emailRegister,
           password: this.passwordRegister,
         })
@@ -53,6 +53,7 @@ export default {
           console.log(response.data);
           this.emailRegister = "";
           this.passwordRegister = "";
+          this.$emit("registerDone");
         })
         .catch((error) => {
           // console.log(error.response.data.message);

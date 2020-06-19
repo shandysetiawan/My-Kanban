@@ -11263,7 +11263,7 @@ var _default = {
 
       (0, _axios.default)({
         method: "delete",
-        url: "http://localhost:3000/task/".concat(id),
+        url: "https://my-kanban-123.herokuapp.com/task/".concat(id),
         headers: {
           access_token: localStorage.token
         }
@@ -11281,7 +11281,7 @@ var _default = {
 
       (0, _axios.default)({
         method: "put",
-        url: "http://localhost:3000/task/".concat(id),
+        url: "https://my-kanban-123.herokuapp.com/task/".concat(id),
         data: {
           title: this.titleTask,
           category: this.categoryTask,
@@ -11291,7 +11291,7 @@ var _default = {
           access_token: localStorage.token
         }
       }).then(function (response) {
-        console.log(response.data);
+        // console.log(response.data);
         _this2.titleTask = "";
         _this2.descriptionTask = "";
         _this2.categoryTask = "";
@@ -11309,7 +11309,7 @@ var _default = {
       this.showModal = true;
       (0, _axios.default)({
         method: "get",
-        url: "http://localhost:3000/task/".concat(id),
+        url: "https://my-kanban-123.herokuapp.com/task/".concat(id),
         headers: {
           access_token: localStorage.token
         }
@@ -11871,13 +11871,15 @@ var _default = {
     registerUser: function registerUser() {
       var _this = this;
 
-      _axios.default.post("http://localhost:3000/register", {
+      _axios.default.post("https://my-kanban-123.herokuapp.com/register", {
         email: this.emailRegister,
         password: this.passwordRegister
       }).then(function (response) {
         console.log(response.data);
         _this.emailRegister = "";
         _this.passwordRegister = "";
+
+        _this.$emit("registerDone");
       }).catch(function (error) {// console.log(error.response.data.message);
       });
     }
@@ -11979,7 +11981,7 @@ exports.default = _default;
         _c(
           "button",
           { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-          [_vm._v("Register")]
+          [_vm._v("Create Account")]
         )
       ]
     )
@@ -12081,6 +12083,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
+//
 var _default = {
   name: "Login",
   components: {
@@ -12104,7 +12109,7 @@ var _default = {
     loginUser: function loginUser() {
       var _this = this;
 
-      _axios.default.post("http://localhost:3000/login", {
+      _axios.default.post("https://my-kanban-123.herokuapp.com/login", {
         email: this.emailLogin,
         password: this.passwordLogin
       }).then(function (response) {
@@ -12129,7 +12134,7 @@ var _default = {
 
       (0, _axios.default)({
         method: "post",
-        url: "http://localhost:3000/googleSign",
+        url: "https://my-kanban-123.herokuapp.com/googleSign",
         data: {
           id_token: id_token
         }
@@ -12143,7 +12148,10 @@ var _default = {
         console.log(err.response);
       });
     },
-    onFailure: function onFailure() {}
+    onFailure: function onFailure() {},
+    registerClick: function registerClick() {
+      this.$emit("registerbutton");
+    }
   }
 };
 exports.default = _default;
@@ -12267,7 +12275,17 @@ exports.default = _default;
       }),
       _c("br"),
       _vm._v(" "),
-      _c("p", [_vm._v("Don't have account? Register below")])
+      _c("p", [_vm._v("Don't have account? Register below")]),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-primary",
+          attrs: { type: "submit" },
+          on: { click: _vm.registerClick }
+        },
+        [_vm._v("\n    Register\n  ")]
+      )
     ],
     1
   )
@@ -12348,11 +12366,9 @@ var _default = {
   props: ["emails"],
   data: function data() {
     return {
-      // client_id is the only required property but you can add several more params, full list down bellow on the Auth api section
       params: {
         client_id: "146593526403-6ft09orv28779ebcdhso77to554ltsdb.apps.googleusercontent.com"
       },
-      // only needed if you want to render the button with the google ui
       renderParams: {
         width: 250,
         height: 50,
@@ -12595,7 +12611,7 @@ var _default = {
 
       (0, _axios.default)({
         method: "post",
-        url: "http://localhost:3000/task",
+        url: "https://my-kanban-123.herokuapp.com/task",
         data: {
           title: this.titleTask,
           category: this.categoryTask,
@@ -12955,7 +12971,8 @@ var _default = {
     return {
       tasks: [],
       isLogged: false,
-      userEmail: ""
+      userEmail: "",
+      registerClick: false
     };
   },
   created: function created() {
@@ -12992,7 +13009,7 @@ var _default = {
 
       (0, _axios.default)({
         method: "get",
-        url: "http://localhost:3000/task",
+        url: "https://my-kanban-123.herokuapp.com/task",
         headers: {
           access_token: localStorage.token
         }
@@ -13013,6 +13030,12 @@ var _default = {
     logOut: function logOut() {
       this.isLogged = false;
       this.userEmail = "";
+    },
+    registerAction: function registerAction() {
+      this.registerClick = true;
+    },
+    registerFinish: function registerFinish() {
+      this.registerClick = false;
     }
   }
 };
@@ -13034,11 +13057,18 @@ exports.default = _default;
       "div",
       { staticClass: "container" },
       [
-        !_vm.isLogged
-          ? _c("Login", { on: { successLogin: _vm.loginSuccess } })
+        !_vm.isLogged || _vm.registerClick
+          ? _c("Login", {
+              on: {
+                successLogin: _vm.loginSuccess,
+                registerbutton: _vm.registerAction
+              }
+            })
           : _vm._e(),
         _vm._v(" "),
-        !_vm.isLogged ? _c("Register") : _vm._e()
+        _vm.registerClick
+          ? _c("Register", { on: { registerDone: _vm.registerFinish } })
+          : _vm._e()
       ],
       1
     ),
@@ -13162,7 +13192,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59567" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63551" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

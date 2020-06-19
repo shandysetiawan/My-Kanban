@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="container">
-    <Login v-if="!isLogged" v-on:successLogin="loginSuccess"></Login>
-    <Register v-if="!isLogged"></Register>
+    <Login v-if="!isLogged || registerClick" v-on:successLogin="loginSuccess" v-on:registerbutton="registerAction"></Login>
+    <Register v-if="registerClick" v-on:registerDone="registerFinish"></Register>
 
 
     </div>
@@ -38,7 +38,8 @@ export default {
     return {
       tasks: [],
       isLogged: false,
-      userEmail:""
+      userEmail:"",
+      registerClick:false
     };
   },
   created() {
@@ -67,7 +68,7 @@ export default {
     fetchTask() {
       axios({
         method: "get",
-        url: "http://localhost:3000/task",
+        url: "https://my-kanban-123.herokuapp.com/task",
         headers: { access_token: localStorage.token }
       })
         .then(response => {
@@ -90,7 +91,15 @@ export default {
     logOut() {
       this.isLogged=false
       this.userEmail=""
+    },
+    registerAction(){
+      this.registerClick =true
+      
+    },
+    registerFinish(){
+      this.registerClick = false
     }
+  
   }
 };
 </script>

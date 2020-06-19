@@ -165,7 +165,7 @@ export default {
     removeTask(id) {
       axios({
         method: "delete",
-        url: `http://localhost:3000/task/${id}`,
+        url: `https://my-kanban-123.herokuapp.com/task/${id}`,
         headers: { access_token: localStorage.token },
       })
         .then((response) => {
@@ -181,7 +181,7 @@ export default {
     editTask(id) {
       axios({
         method: "put",
-        url: `http://localhost:3000/task/${id}`,
+        url: `https://my-kanban-123.herokuapp.com/task/${id}`,
         data: {
           title: this.titleTask,
           category: this.categoryTask,
@@ -190,7 +190,7 @@ export default {
         headers: { access_token: localStorage.token },
       })
         .then((response) => {
-          console.log(response.data);
+          // console.log(response.data);
           this.titleTask = "";
           this.descriptionTask = "";
           this.categoryTask = "";
@@ -206,7 +206,7 @@ export default {
       this.showModal = true;
       axios({
         method: "get",
-        url: `http://localhost:3000/task/${id}`,
+        url: `https://my-kanban-123.herokuapp.com/task/${id}`,
         headers: { access_token: localStorage.token },
       })
         .then((response) => {

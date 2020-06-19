@@ -31,11 +31,9 @@ export default {
     props: ["emails"],
     data() {
             return {
-                // client_id is the only required property but you can add several more params, full list down bellow on the Auth api section
                 params: {
                     client_id: "146593526403-6ft09orv28779ebcdhso77to554ltsdb.apps.googleusercontent.com"
                 },
-                // only needed if you want to render the button with the google ui
                 renderParams: {
                     width: 250,
                     height: 50,
