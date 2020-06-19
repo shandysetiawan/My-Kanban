@@ -3,12 +3,8 @@ const { User, Task } = require('../models')
 
 function authentication(req, res, next) {
 
-    console.log('in auth')
-    console.log(req.headers)
+    const access_token = req.headers.access_token
 
-    const { access_token } = req.headers
-
-    console.log(access_token)
     if (!access_token) {
         next({ name: "AUTH_FAILED1" })
     } else {
@@ -25,12 +21,9 @@ function authentication(req, res, next) {
                     } else {
                         next({ name: "AUTH_FAILED" })
                     }
-
                 })
 
-
         } catch (err) {
-
             next(err)
         }
     }

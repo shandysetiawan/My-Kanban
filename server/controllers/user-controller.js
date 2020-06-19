@@ -1,6 +1,7 @@
 const { User } = require('../models')
 const Helper = require('../helpers/helpers')
 const jwt = require('jsonwebtoken');
+const { OAuth2Client } = require('google-auth-library');
 
 class UserController {
 
@@ -49,9 +50,7 @@ class UserController {
 
                         let access_token = jwt.sign(dataUser, process.env.KEYJWT);
 
-                        console.log(access_token)
-
-                        res.status(200).json(access_token)
+                        res.status(200).json({ access_token: access_token, emailUser: dataUser.email, idUser: dataUser.id })
                     } else {
 
                         throw ({ name: "EMAIL_PASS_NOT MATCH" })
@@ -87,7 +86,7 @@ class UserController {
             .then((ticket) => {
 
                 email = ticket.getPayload().email
-                return User.findOner({ where: { email: email } })
+                return User.findOne({ where: { email: email } })
             })
             .then((data) => {
 
@@ -102,11 +101,13 @@ class UserController {
 
             })
             .then((data) => {
-                let token = jwt.sign({ id: data.id, email: data.email }, process.env.KEYJWT)
 
-                res.status(201).json({ access_token: token })
+                let access_token = jwt.sign({ id: data.id, email: data.email }, process.env.KEYJWT)
+
+                res.status(200).json({ access_token: access_token, emailUser: data.email, idUser: data.id })
             })
             .catch((err) => {
+
                 next(err)
             })
     }

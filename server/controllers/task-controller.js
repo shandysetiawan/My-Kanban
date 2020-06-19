@@ -9,7 +9,7 @@ class TaskController {
         Task.create(newTask)
             .then((data) => {
 
-                res.status(201).json({ data })
+                res.status(201).json(data)
 
             }).catch((err) => {
                 next(err)
@@ -22,7 +22,24 @@ class TaskController {
         Task.findAll()
             .then((data) => {
 
-                res.status(200).json({ data })
+                res.status(200).json(data)
+
+            })
+            .catch((err) => {
+                next(err)
+            })
+
+    }
+
+    static searchTask(req, res, next) {
+
+        let taskId = req.params.id
+
+
+        Task.findOne({ where: { id: taskId } })
+            .then((data) => {
+
+                res.status(200).json(data)
 
             })
             .catch((err) => {
@@ -40,12 +57,12 @@ class TaskController {
 
         Task.update(updateTask, { where: { id: taskId } })
             .then((data) => {
-
+                console.log('edit atas')
                 res.status(200).json({ data })
 
             })
             .catch((err) => {
-
+                console.log('edit bawah')
                 next(err)
             })
 

@@ -9,6 +9,8 @@ routes.get('/', taskController.fetchTask)
 
 routes.post('/', taskController.createTask)
 
+routes.get('/:id', authorization, taskController.searchTask)
+
 routes.put('/:id', authorization, taskController.editTask)
 
 routes.delete('/:id', authorization, taskController.removeTask)
