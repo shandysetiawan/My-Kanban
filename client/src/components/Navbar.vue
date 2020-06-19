@@ -9,12 +9,12 @@
     <ul class="navbar-nav">
   
       <li class="nav-item">
-  <p class="navbar-brand color-white text-light">WELCOME!!</p>
+  <p class="navbar-brand text-light">WELCOME {{emails}}</p>
       </li>
   
     </ul>
   </div>
-          <GoogleLogin :params="params" :logoutButton=true :onSuccess="logOutUser">Logout</GoogleLogin>
+          <GoogleLogin class="button btn-danger btn-lg" :params="params" :logoutButton=true :onSuccess="logOutUser">Logout</GoogleLogin>
 </nav>
 
 <section>
@@ -28,7 +28,8 @@ import GoogleLogin from 'vue-google-login';
 export default {
     name:"Navbar",
     components:{GoogleLogin},
-      data() {
+    props: ["emails"],
+    data() {
             return {
                 // client_id is the only required property but you can add several more params, full list down bellow on the Auth api section
                 params: {
@@ -46,12 +47,9 @@ export default {
 
   logOutUser(){    
   
-    // const auth2 = gapi.auth2.getAuthInstance();
-    // auth2.signOut().then(function () {
-    //     console.log('User signed out.')
-
-    // });
      localStorage.removeItem('token')
+     localStorage.removeItem('emailUser')
+     localStorage.removeItem('idUser')
       this.$emit("logoutsuccess");
     },
 

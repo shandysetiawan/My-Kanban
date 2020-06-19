@@ -27,12 +27,16 @@
       </div>
       <button type="submit" class="btn btn-primary">Login</button>
     </form>
+    <br />
+    <p>OR</p>
     <GoogleLogin
       :params="params"
       :renderParams="renderParams"
       :onSuccess="onSuccess"
       :onFailure="onFailure"
-    ></GoogleLogin>
+    ></GoogleLogin
+    ><br />
+    <p>Don't have account? Register below</p>
   </section>
 
   <!-- ----------------------------------------------- -->
@@ -107,3 +111,9 @@ export default {
   },
 };
 </script>
+<style scoped>
+p,
+label {
+  font-size: 16px;
+}
+</style>

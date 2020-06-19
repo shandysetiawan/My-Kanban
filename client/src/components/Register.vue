@@ -61,3 +61,10 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+p,
+label {
+  font-size: 16px;
+}
+</style>

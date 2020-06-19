@@ -15,10 +15,15 @@
         data-toggle="modal"
         data-target="#exampleModal"
         @click="getOne(task.id)"
+        :disabled="buttonDisable"
       >
         Edit
       </button>
-      <button class="btn btn-info btn-sm" @click="showModalDelete = true">
+      <button
+        class="btn btn-info btn-sm"
+        @click="showModalDelete = true"
+        :disabled="buttonDisable"
+      >
         Delete
       </button>
     </div>
@@ -145,7 +150,15 @@ export default {
       categoryTask: "",
       showModal: false,
       showModalDelete: false,
+      disabledButton: false,
     };
+  },
+  computed: {
+    buttonDisable() {
+      if (this.task.UserId != localStorage.idUser) {
+        return (this.disabledButton = true);
+      }
+    },
   },
   props: ["task"],
   methods: {
@@ -156,7 +169,7 @@ export default {
         headers: { access_token: localStorage.token },
       })
         .then((response) => {
-          console.log(response.data);
+          // console.log(response.data);
           this.showModalDelete = false;
           this.$emit("refresh");
         })

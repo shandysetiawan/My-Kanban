@@ -11232,6 +11232,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
+//
+//
+//
 var _default = {
   name: "Task",
   data: function data() {
@@ -11240,8 +11245,16 @@ var _default = {
       descriptionTask: "",
       categoryTask: "",
       showModal: false,
-      showModalDelete: false
+      showModalDelete: false,
+      disabledButton: false
     };
+  },
+  computed: {
+    buttonDisable: function buttonDisable() {
+      if (this.task.UserId != localStorage.idUser) {
+        return this.disabledButton = true;
+      }
+    }
   },
   props: ["task"],
   methods: {
@@ -11255,7 +11268,7 @@ var _default = {
           access_token: localStorage.token
         }
       }).then(function (response) {
-        console.log(response.data);
+        // console.log(response.data);
         _this.showModalDelete = false;
 
         _this.$emit("refresh");
@@ -11349,7 +11362,8 @@ exports.default = _default;
             attrs: {
               type: "button",
               "data-toggle": "modal",
-              "data-target": "#exampleModal"
+              "data-target": "#exampleModal",
+              disabled: _vm.buttonDisable
             },
             on: {
               click: function($event) {
@@ -11364,6 +11378,7 @@ exports.default = _default;
           "button",
           {
             staticClass: "btn btn-info btn-sm",
+            attrs: { disabled: _vm.buttonDisable },
             on: {
               click: function($event) {
                 _vm.showModalDelete = true
@@ -11977,7 +11992,7 @@ render._withStripped = true
             render: render,
             staticRenderFns: staticRenderFns,
             _compiled: true,
-            _scopeId: null,
+            _scopeId: "data-v-c00f8a",
             functional: undefined
           };
         })());
@@ -11997,9 +12012,13 @@ render._withStripped = true
         }
 
         
+        var reloadCSS = require('_css_loader');
+        module.hot.dispose(reloadCSS);
+        module.hot.accept(reloadCSS);
+      
       }
     })();
-},{"axios":"node_modules/axios/index.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"node_modules/vue-google-login/dist/vue-google-login.min.js":[function(require,module,exports) {
+},{"axios":"node_modules/axios/index.js","_css_loader":"../../../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"node_modules/vue-google-login/dist/vue-google-login.min.js":[function(require,module,exports) {
 var define;
 !function(t,e){"object"==typeof exports&&"undefined"!=typeof module?e(exports):"function"==typeof define&&define.amd?define(["exports"],e):e((t=t||self)["vue-google-login"]={})}(this,(function(t){"use strict";var e,n,i=function(t){return e?Promise.resolve(e):(n||(n=function(t){return new Promise((function(n,i){window.onGapiLoad=function(){window.gapi.load("auth2",(function(){try{e=window.gapi.auth2.init(Object.assign({},t))}catch(t){i({err:"client_id missing or is incorrect, or if you added extra params maybe they are written incorrectly, did you add it to the component or plugin?"})}n(e)}))}}))}(t)),n)},o=function(t,e){if(t)return t[e]();return Promise.reject({err:"Script not loaded correctly, did you added the plugin or the client_id to the component?"})},r={load:function(t){return Promise.all([i(t),new Promise((function(t,e){if(!document.getElementById("auth2_script_id")){var n=document.createElement("script");n.setAttribute("src","https://apis.google.com/js/platform.js?onload=onGapiLoad"),n.setAttribute("async",!0),n.setAttribute("defer","defer"),n.setAttribute("id","auth2_script_id"),document.head.appendChild(n)}t()}))]).then((function(t){return t[0]}))},signIn:function(){return o(e,"signIn")},signOut:function(){return o(e,"signOut")},isSignedIn:function(){return o(e.isSignedIn,"get")},currentUser:function(){return o(e.currentUser,"get")},grantOfflineAccess:function(){return o(e,"grantOfflineAccess")}},s=0;var u=function(t,e,n,i,o,r,s,u,c,d){"boolean"!=typeof s&&(c=u,u=s,s=!1);var a,l="function"==typeof n?n.options:n;if(t&&t.render&&(l.render=t.render,l.staticRenderFns=t.staticRenderFns,l._compiled=!0,o&&(l.functional=!0)),i&&(l._scopeId=i),r?(a=function(t){(t=t||this.$vnode&&this.$vnode.ssrContext||this.parent&&this.parent.$vnode&&this.parent.$vnode.ssrContext)||"undefined"==typeof __VUE_SSR_CONTEXT__||(t=__VUE_SSR_CONTEXT__),e&&e.call(this,c(t)),t&&t._registeredComponents&&t._registeredComponents.add(r)},l._ssrRegister=a):e&&(a=s?function(){e.call(this,d(this.$root.$options.shadowRoot))}:function(t){e.call(this,u(t))}),a)if(l.functional){var f=l.render;l.render=function(t,e){return a.call(e),f(t,e)}}else{var h=l.beforeCreate;l.beforeCreate=h?[].concat(h,a):[a]}return n}({render:function(){var t=this.$createElement,e=this._self._c||t;return this.renderParams&&!this.logoutButton?e("div",{attrs:{id:this.id},on:{click:this.handleClick}}):e("button",{attrs:{id:this.id},on:{click:this.handleClick}},[this._t("default")],2)},staticRenderFns:[]},void 0,{name:"GoogleLogin",props:{params:{type:Object,required:!0},onCurrentUser:{type:Function,default:function(){}},onSuccess:{type:Function,default:function(){}},onFailure:{type:Function,default:function(){}},logoutButton:{type:Boolean,default:!1},renderParams:{type:Object,required:!1}},beforeCreate:function(){this.id="google-signin-btn-".concat(s++)},methods:{handleClick:function(){var t=this,e=this.logoutButton?"signOut":"signIn";r[e]().then((function(e){return t.onSuccess(e)})).catch((function(e){return t.onFailure(e)}))}},mounted:function(){var t=this;r.load(this.params).then((function(){t.renderParams&&!1===t.logoutButton&&window.gapi.signin2.render(t.id,t.renderParams),r.isSignedIn()&&t.onCurrentUser(r.currentUser())})).catch((function(t){console.log(t)}))}},void 0,!1,void 0,void 0,void 0),c={install:function(t,e){t.GoogleAuth=r.load(e)}};t.GoogleLogin=u,t.LoaderPlugin=c,t.default=u,Object.defineProperty(t,"__esModule",{value:!0})}));
 
@@ -12018,6 +12037,10 @@ var _vueGoogleLogin = _interopRequireDefault(require("vue-google-login"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+//
+//
+//
+//
 //
 //
 //
@@ -12230,6 +12253,10 @@ exports.default = _default;
         ]
       ),
       _vm._v(" "),
+      _c("br"),
+      _vm._v(" "),
+      _c("p", [_vm._v("OR")]),
+      _vm._v(" "),
       _c("GoogleLogin", {
         attrs: {
           params: _vm.params,
@@ -12237,7 +12264,10 @@ exports.default = _default;
           onSuccess: _vm.onSuccess,
           onFailure: _vm.onFailure
         }
-      })
+      }),
+      _c("br"),
+      _vm._v(" "),
+      _c("p", [_vm._v("Don't have account? Register below")])
     ],
     1
   )
@@ -12249,7 +12279,7 @@ render._withStripped = true
             render: render,
             staticRenderFns: staticRenderFns,
             _compiled: true,
-            _scopeId: null,
+            _scopeId: "data-v-624347",
             functional: undefined
           };
         })());
@@ -12269,9 +12299,13 @@ render._withStripped = true
         }
 
         
+        var reloadCSS = require('_css_loader');
+        module.hot.dispose(reloadCSS);
+        module.hot.accept(reloadCSS);
+      
       }
     })();
-},{"axios":"node_modules/axios/index.js","vue-google-login":"node_modules/vue-google-login/dist/vue-google-login.min.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/components/Navbar.vue":[function(require,module,exports) {
+},{"axios":"node_modules/axios/index.js","vue-google-login":"node_modules/vue-google-login/dist/vue-google-login.min.js","_css_loader":"../../../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/components/Navbar.vue":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -12311,6 +12345,7 @@ var _default = {
   components: {
     GoogleLogin: _vueGoogleLogin.default
   },
+  props: ["emails"],
   data: function data() {
     return {
       // client_id is the only required property but you can add several more params, full list down bellow on the Auth api section
@@ -12327,11 +12362,9 @@ var _default = {
   },
   methods: {
     logOutUser: function logOutUser() {
-      // const auth2 = gapi.auth2.getAuthInstance();
-      // auth2.signOut().then(function () {
-      //     console.log('User signed out.')
-      // });
       localStorage.removeItem('token');
+      localStorage.removeItem('emailUser');
+      localStorage.removeItem('idUser');
       this.$emit("logoutsuccess");
     }
   }
@@ -12360,11 +12393,27 @@ exports.default = _default;
         _vm._v(" "),
         _vm._m(0),
         _vm._v(" "),
-        _vm._m(1),
+        _c(
+          "div",
+          {
+            staticClass: "collapse navbar-collapse",
+            attrs: { id: "navbarNav" }
+          },
+          [
+            _c("ul", { staticClass: "navbar-nav" }, [
+              _c("li", { staticClass: "nav-item" }, [
+                _c("p", { staticClass: "navbar-brand text-light" }, [
+                  _vm._v("WELCOME " + _vm._s(_vm.emails))
+                ])
+              ])
+            ])
+          ]
+        ),
         _vm._v(" "),
         _c(
           "GoogleLogin",
           {
+            staticClass: "button btn-danger btn-lg",
             attrs: {
               params: _vm.params,
               logoutButton: true,
@@ -12377,7 +12426,7 @@ exports.default = _default;
       1
     ),
     _vm._v(" "),
-    _vm._m(2)
+    _vm._m(1)
   ])
 }
 var staticRenderFns = [
@@ -12399,24 +12448,6 @@ var staticRenderFns = [
         }
       },
       [_c("span", { staticClass: "navbar-toggler-icon" })]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "collapse navbar-collapse", attrs: { id: "navbarNav" } },
-      [
-        _c("ul", { staticClass: "navbar-nav" }, [
-          _c("li", { staticClass: "nav-item" }, [
-            _c("p", { staticClass: "navbar-brand color-white text-light" }, [
-              _vm._v("WELCOME!!")
-            ])
-          ])
-        ])
-      ]
     )
   },
   function() {
@@ -12466,6 +12497,24 @@ var _axios = _interopRequireDefault(require("axios"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -12591,20 +12640,24 @@ exports.default = _default;
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c(
-      "button",
-      {
-        staticClass: "btn btn-danger btn-lg",
-        attrs: { type: "button" },
-        on: {
-          click: function($event) {
-            _vm.showModal = !_vm.showModal
-          }
-        }
-      },
-      [_vm._v("\n    Add Task\n  ")]
-    ),
-    _vm._v("\n​\n  "),
+    _c("div", { staticClass: "container" }, [
+      _c("div", { staticClass: "row flex-end" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-success btn-lg",
+            attrs: { id: "buttonAdd", type: "button" },
+            on: {
+              click: function($event) {
+                _vm.showModal = !_vm.showModal
+              }
+            }
+          },
+          [_vm._v("\n        Add New Task\n      ")]
+        )
+      ])
+    ]),
+    _vm._v("\n  ​\n  "),
     _vm.showModal
       ? _c("div", { staticClass: "loadingModal" }, [
           _c("div", { staticClass: "theModal" }, [
@@ -12778,7 +12831,11 @@ exports.default = _default;
                               }
                             }
                           },
-                          [_vm._v("Close")]
+                          [
+                            _vm._v(
+                              "\n                  Close\n                "
+                            )
+                          ]
                         ),
                         _vm._v(" "),
                         _c(
@@ -12787,7 +12844,11 @@ exports.default = _default;
                             staticClass: "btn btn-primary",
                             attrs: { type: "submit" }
                           },
-                          [_vm._v("Create Task")]
+                          [
+                            _vm._v(
+                              "\n                  Create Task\n                "
+                            )
+                          ]
                         )
                       ])
                     ]
@@ -12894,7 +12955,7 @@ var _default = {
     return {
       tasks: [],
       isLogged: false,
-      showModal: false
+      userEmail: ""
     };
   },
   created: function created() {
@@ -12938,8 +12999,8 @@ var _default = {
       }).then(function (response) {
         // console.log(response.data.data);
         _this.tasks = response.data;
-      }).catch(function (error) {
-        console.log(error); // console.log(error.response.data.message);
+      }).catch(function (error) {// console.log(error)
+        // console.log(error.response.data.message);
       });
     },
     pushData: function pushData() {
@@ -12947,9 +13008,11 @@ var _default = {
     },
     loginSuccess: function loginSuccess() {
       this.isLogged = true, this.fetchTask();
+      this.userEmail = localStorage.emailUser;
     },
     logOut: function logOut() {
       this.isLogged = false;
+      this.userEmail = "";
     }
   }
 };
@@ -12984,7 +13047,10 @@ exports.default = _default;
       ? _c(
           "section",
           [
-            _c("Navbar", { on: { logoutsuccess: _vm.logOut } }),
+            _c("Navbar", {
+              attrs: { emails: _vm.userEmail },
+              on: { logoutsuccess: _vm.logOut }
+            }),
             _vm._v(" "),
             _c("Add", { on: { refresh: _vm.pushData } }),
             _vm._v(" "),
