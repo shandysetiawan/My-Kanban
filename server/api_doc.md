@@ -2,17 +2,20 @@
 
 > KANBAN is website for task management. This app has :
 >
-> RESTful endpoint for todo's CRUD operation with JSON formatted response
+> RESTful endpoint for task's CRUD operation with JSON formatted response
+> Technology use for this website:
+> Client: Vue Component, Bootstrap
+> Server: Postgres,Sequelize, Express
 
 ## Restful Endpoints
 
 1. POST : /register
 2. POST ; /login
-3. POST : /task
-4. GET : /task
-5. GET : /task/:id
-6. PUT : /task/:id
-7. DELETE : /task/:id
+3. POST : /tasks
+4. GET : /tasks
+5. GET : /tasks/:id
+6. PUT : /tasks/:id
+7. DELETE : /tasks/:id
 
 ## POST /register
 
@@ -20,8 +23,8 @@ Request body:
 
 ```json
 {
-  "email": "testing@email.com",
-  "password": "test123"
+  "email": "<your email>",
+  "password": "<your password>"
 }
 ```
 
@@ -29,8 +32,8 @@ Response(201 - Created):
 
 ```json
 {
-  "id": 1,
-  "email": "testing@email.com"
+  "id": "<integer>",
+  "email": "<your email>"
 }
 ```
 
@@ -72,8 +75,8 @@ Request body:
 
 ```json
 {
-  "email": "testing@email.com",
-  "password": "test123"
+  "email": "<your email>",
+  "password": "<your password>"
 }
 ```
 
@@ -123,8 +126,7 @@ Request body:
 
 ```json
 {
-  "idToken": "id_token",
-  "audience": "<your client_id>"
+  "idToken": "id_token"
 }
 ```
 
@@ -132,7 +134,7 @@ Response(200 - Ok):
 
 ```json
 {
-  "access_token": "<user token>"
+  "access_token": "<your access token>"
 }
 ```
 
@@ -144,7 +146,7 @@ Response(500 - INTERNAL SERVER ERROR)
 }
 ```
 
-## POST /todos
+## POST /tasks
 
 Request headers:
 
@@ -158,9 +160,9 @@ Request body:
 
 ```json
 {
-  "title": "Learning Days",
-  "category": "todo",
-  "description": "read page 1 to 10"
+  "title": "<your task title>",
+  "category": "<your task category>",
+  "description": "<your task description>"
 }
 ```
 
@@ -168,12 +170,12 @@ Response(201 - Created):
 
 ```json
 {
-  "id": 1,
-  "title": "Learning Days",
-  "category": "todo",
-  "description": "read page 1 to 10",
-  "updatedAt": "2020-06-08T14:38:39.104Z",
-  "createdAt": "2020-06-08T14:38:39.104Z"
+  "id": "<integer>",
+  "title": "<your task title>",
+  "category": "<your task category>",
+  "description": "<your task description>",
+  "updatedAt": "<date>",
+  "createdAt": "<date>"
 }
 ```
 
@@ -193,7 +195,7 @@ Response(500 - INTERNAL SERVER ERROR)
 }
 ```
 
-## GET /todos
+## GET /tasks
 
 Request headers:
 
@@ -211,20 +213,15 @@ Response(200 - Ok):
 ```json
 [
   {
-    "id": 1,
-    "title": "Learning Days 0",
-    "category": "done",
-    "description": "read page 1 to 10",
-    "updatedAt": "2020-06-08T14:38:39.104Z",
-    "createdAt": "2020-06-08T14:38:39.104Z"
+  "id": "<integer>",
+  "title": "<your task title>",
+  "category": "<your task category>",
+  "description": "<your task description>",
+  "updatedAt": "<date>",
+  "createdAt": "<date>"
   },
   {
-    "id": 2,
-    "title": "Learning Taichi",
-    "category": "completed",
-    "description": "read page 2 to 10",
-    "updatedAt": "2020-06-08T14:38:39.104Z",
-    "createdAt": "2020-06-08T14:38:39.104Z"
+    ...
   }
 ]
 ```
@@ -237,7 +234,7 @@ Response(500 - INTERNAL SERVER ERROR)
 }
 ```
 
-## GET /todos/:id
+## GET /tasks/:id
 
 Request headers:
 
@@ -248,12 +245,7 @@ Request headers:
 ```
 
 Request params:
-
-```json
-{
-  "id": "<item_id>"
-}
-```
+id: integer (required)
 
 Request body:
 not needed
@@ -262,12 +254,12 @@ Response(200 - Ok):
 
 ```json
 {
-  "id": 1,
-  "title": "Learning Days",
-  "category": "todo",
-  "description": "read page 1 to 10",
-  "updatedAt": "2020-06-08T14:38:39.104Z",
-  "createdAt": "2020-06-08T14:38:39.104Z"
+  "id": "<integer>",
+  "title": "<your task title>",
+  "category": "<your task category>",
+  "description": "<your task description>",
+  "updatedAt": "<date>",
+  "createdAt": "<date>"
 }
 ```
 
@@ -279,7 +271,7 @@ Response(500 - INTERNAL SERVER ERROR)
 }
 ```
 
-## PUT /todos/:id
+## PUT /tasks/:id
 
 Request headers:
 
@@ -290,20 +282,15 @@ Request headers:
 ```
 
 Request params:
-
-```json
-{
-  "id": "<item_id>"
-}
-```
+id: integer (required)
 
 Request body:
 
 ```json
 {
-  "title": "Learning Days",
-  "category": "todo/done/backlog/completed",
-  "description": "read page 1 to 10"
+  "title": "<your task title>",
+  "category": "<your task category>",
+  "description": "<your task description>"
 }
 ```
 
@@ -311,12 +298,12 @@ Response(200 - OK):
 
 ```json
 {
-  "id": 1,
-  "title": "Learning Days",
-  "category": "todo/done/backlog/completed",
-  "description": "read page 1 to 10",
-  "updatedAt": "2020-06-20T14:38:39.104Z",
-  "createdAt": "2020-06-20T14:38:39.104Z"
+  "id": "<integer>",
+  "title": "<your task title>",
+  "category": "<your task category>",
+  "description": "<your task description>",
+  "updatedAt": "<date>",
+  "createdAt": "<date>"
 }
 ```
 
@@ -336,7 +323,7 @@ Response(500 - INTERNAL SERVER ERROR)
 }
 ```
 
-## DELETE /todos/:id
+## DELETE /tasks/:id
 
 Request headers:
 
@@ -347,12 +334,7 @@ Request headers:
 ```
 
 Request params:
-
-```json
-{
-  "id": "<item_id>"
-}
-```
+id: integer (required)
 
 Request body:
 not needed
